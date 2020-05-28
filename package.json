@@ -1,0 +1,21 @@
+{
+  "name": "serverless-vtuber-scheduler",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/syu-y/serverless-vtuber-scheduler.git",
+  "author": "syu-y <syu12580526@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dayjs": "^1.8.28"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "babel-loader": "^8.1.0",
+    "serverless-offline": "^6.1.4",
+    "serverless-webpack": "^5.3.1",
+    "webpack": "^4.42.1",
+    "aws-sdk": "^2.656.0"
+  }
+}
