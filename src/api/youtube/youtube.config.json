@@ -1,0 +1,7 @@
+{
+  "endpoint": "https://www.googleapis.com/youtube/v3/search",
+  "apiKey": "AIzaSyDO6C6aSo_FmSqqWJVK_7SflSzRNSXY16k",
+  "maxResults": 50,
+  "order": "date",
+  "eventType": "upcoming"
+}
