@@ -3,5 +3,6 @@
   "apiKey": "AIzaSyDO6C6aSo_FmSqqWJVK_7SflSzRNSXY16k",
   "maxResults": 50,
   "order": "date",
+  "type": "video",
   "eventType": "upcoming"
 }

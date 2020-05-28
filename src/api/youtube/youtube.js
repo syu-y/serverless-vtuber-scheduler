@@ -4,9 +4,13 @@ import { youtubeConfig } from 'src/api/youtube/config';
 
 const endpoint = youtubeConfig.endpoint;
 const apiKey = youtubeConfig.apiKey;
+const type = youtubeConfig.type;
 
-const generateUrlVideos = ({ channelId, maxResults, order }) =>
-  `${endpoint}?key=${apiKey}&channelId=${channelId}&count=${maxResults}&order=${order}`;
+const generateUrlVideos = ({ channelId, maxResults, order }) => {
+  const url = `${endpoint}?part=snippet&key=${apiKey}&type=${type}&channelId=${channelId}&count=${maxResults}&order=${order}`;
+  console.log(url);
+  return url;
+};
 
 const generateUrlBloadcast = ({
   channelId,
@@ -14,8 +18,11 @@ const generateUrlBloadcast = ({
   order,
   eventType,
   publishedAfter,
-}) =>
-  `${endpoint}?key=${apiKey}&channelId=${channelId}&count=${maxResults}&order=${order}&eventType=${eventType}&publishedAfter=${publishedAfter}`;
+}) => {
+  const url = `${endpoint}?part=snippet&key=${apiKey}&type=${type}&channelId=${channelId}&count=${maxResults}&order=${order}&eventType=${eventType}&publishedAfter=${publishedAfter}`;
+  console.log(url);
+  return url;
+};
 
 /**
  * チャンネルIDをキーにチャンネルの動画を最新の50件まで取得する
@@ -44,7 +51,7 @@ const getBloadcast = ({ channelId }) => {
       order,
       eventType,
       publishedAfter,
-    })
+    }),
   );
 };
 
