@@ -4,3 +4,7 @@ jspm_packages
 
 # Serverless directories
 .serverless
+.dynamodb
+
+# Key Info
+youtube-key.json

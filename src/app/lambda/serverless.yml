@@ -1,0 +1,29 @@
+service: ${self:custom.appName}-lambda
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, self:custom.defaultStage}
+  region: ap-northeast-1
+  profile: private
+  environment:
+    STAGE: ${self:provider.stage}
+    PREFIX: ${self:custom.appName}-${self:provider.stage}
+    CHANNEL_INFO_TABLE: ${self:provider.environment.PREFIX}-channel-info
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: 'arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.PREFIX}*'
+custom:
+  defaultStage: dev
+  appName: vtuber-scheduler
+plugins:
+  - serverless-webpack
+functions:
+  getYoutubeBroadcast:
+    handler: src/app/lambda/get-youtube-broadcast/handler.getYoutubeBloadcast

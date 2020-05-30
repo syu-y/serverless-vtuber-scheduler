@@ -5,6 +5,17 @@
   "repository": "https://github.com/syu-y/serverless-vtuber-scheduler.git",
   "author": "syu-y <syu12580526@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "dynamoDB": "echo ###### DynamoDB Scripts ######",
+    "dynamodb:setup": "sls dynamodb install -c ./src/app/dynamodb/serverless.yml",
+    "dynamodb:start": "sls dynamodb start -c ./src/app/dynamodb/serverless.yml",
+    "dynamodb:deploy": "sls deploy -c ./src/app/dynamodb/serverless.yml",
+    "dynamodb:deploy:prod": "sls deploy --stage prod -c ./src/app/dynamodb/serverless.yml",
+    "dynamodb:rm": "sls remove -c ./src/app/dynamodb/serverless.yml",
+    "dynamodb:rm:prod": "sls remove --stage prod -c ./src/app/dynamodb/serverless.yml",
+    "invoke": "echo ###### Invoke Lambda Local ######",
+    "invoke:get-youtube-broadcast": "LOCAL=true sls invoke local -f getYoutubeBroadcast -c ./src/app/lambda/serverless.yml"
+  },
   "dependencies": {
     "axios": "^0.19.2",
     "dayjs": "^1.8.28"
@@ -12,10 +23,11 @@
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
+    "aws-sdk": "^2.685.0",
     "babel-loader": "^8.1.0",
+    "serverless-dynamodb-local": "^0.2.39",
     "serverless-offline": "^6.1.4",
-    "serverless-webpack": "^5.3.1",
-    "webpack": "^4.42.1",
-    "aws-sdk": "^2.656.0"
+    "serverless-webpack": "^5.3.2",
+    "webpack": "^4.42.1"
   }
 }

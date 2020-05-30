@@ -1,22 +1,57 @@
-import dayjs from 'dayjs';
+import dayjs, { isSameOrAfter } from 'dayjs';
 import youtubeApi from 'src/api/youtube';
+import channelInfoRepository from 'src/db/dynamodb/channel-info';
 
 export const getYoutubeBloadcast = async () => {
+  // チャンネル情報全件取得
+  const dbResponse = await channelInfoRepository.getAllItems();
+  const channelInfoList = dbResponse.Items;
+  console.log(channelInfoList);
+  // チャンネルIdを抽出してリスト化
+  const channelIdList = channelInfoList.map((item) => item.channelId);
+  console.log(channelIdList);
+
   await Promise.all(
-    connpassUserList.map(async (channelId) => {
+    // チャンネルIDごとに動画情報を取得
+    channelIdList.map(async (channelId) => {
       try {
-        const response = await youtubeApi.getYoutubeBloadcast({ channelId });
-        console.log(response);
-        if (!response.data) return;
+        // 動画情報を取得
+        const apiResponse = await youtubeApi.getBroadcasts({ channelId });
+        if (!apiResponse.data) return;
 
-        const date = dayjs().format('YYYY-MM-DD');
-        const bloadcasts = response.data.events.map((element) => ({}));
+        // 配信情報のリスト生成
+        const broadcasts = apiResponse.data.items.map((broadcast) => {
+          return {
+            channelId: channelId,
+            videoId: broadcast.id.videoId,
+            title: broadcast.snippet.title,
+            thumbnailUrl: broadcast.snippet.thumbnails.medium.url,
+          };
+        });
 
-        await connpassHistoryRepository.putItem({ date, userId, events });
+        // 動画IDをキーに各動画の配信日を取得する
+        broadcasts.map(async (broadcast) => {
+          const apiResponse = await youtubeApi.getBroadcastSchedule(
+            broadcast.videoId,
+          );
+          if (!apiResponse.data) return;
+
+          // 配信日取得
+          const date = dayjs(
+            apiResponse.data.items[0].liveStreamingDetails.scheduledStartTime,
+          );
+
+          // 配信日がlambda動作日以降の場合、Dynamoに格納
+          const today = dayjs().format();
+          if (date.isAfter(today)) {
+            const broadcastDate = date.format();
+            broadcast = { ...broadcast, broadcastDate };
+            console.log(broadcast);
+          }
+        });
       } catch (error) {
         console.log(error);
       }
-      return { statusCode: 200 };
     }),
   );
 };
