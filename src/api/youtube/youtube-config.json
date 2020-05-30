@@ -1,0 +1,17 @@
+{
+  "searchVideos": {
+    "endpoint": "https://www.googleapis.com/youtube/v3/search",
+    "part": "snippet",
+    "maxResults": 50,
+    "order": "date",
+    "type": "video",
+    "eventType": "upcoming"
+  },
+  "getBroadcastSchedule": {
+    "endpoint": "https://www.googleapis.com/youtube/v3/videos",
+    "part": "liveStreamingDetails"
+  },
+  "generateAccessToken": {
+    "endpoint": "https://www.googleapis.com/oauth2/v4/token"
+  }
+}
