@@ -30,3 +30,11 @@ functions:
     handler: src/app/lambda/get-youtube-broadcast/handler.getYoutubeBloadcast
   getChannelInfo:
     handler: src/app/lambda/get-channel-info/handler.getChannelInfo
+  youtubeBroadcastInfoApi:
+    handler: src/app/lambda/youtube-broadcast-api/handler.youtubeBroadcastInfoApi
+    # API Gatewayに関する設定
+    events:
+      - http:
+          path: youtubeBroadcastInfo
+          method: get
+          cors: true

@@ -16,17 +16,25 @@
     "invoke": "echo ###### Invoke Lambda Local ######",
     "invoke:get-youtube-broadcast": "LOCAL=true sls invoke local -f getYoutubeBroadcast -c ./src/app/lambda/serverless.yml",
     "invoke:get-channel-info": "LOCAL=true sls invoke local -f getChannelInfo -c ./src/app/lambda/serverless.yml",
+    "invoke:youtube-broadcast-api": "LOCAL=true sls invoke local -f youtubeBroadcastInfoApi -c ./src/app/lambda/serverless.yml",
     "invoke:aws": "echo ###### Invoke Lambda AWS ######",
     "invoke:aws:get-youtube-broadcast": "sls invoke -f getYoutubeBroadcast -c ./src/app/lambda/serverless.yml",
     "invoke:aws:get-channel-info": "sls invoke -f getChannelInfo -c ./src/app/lambda/serverless.yml",
+    "invoke:aws:youtube-broadcast-api": "sls invoke -f youtubeBroadcastInfoApi -c ./src/app/lambda/serverless.yml",
     "lambda": "echo ###### Deploy Lambda ######",
     "lambda:deploy:all": "sls deploy -c ./src/app/lambda/serverless.yml",
     "lambda:deploy:get-youtube-broadcast": "sls deploy function -f getYoutubeBroadcast -c ./src/app/lambda/serverless.yml",
-    "invoke:deploy:get-channel-info": "sls deploy function -f getChannelInfo -c ./src/app/lambda/serverless.yml"
+    "invoke:deploy:get-channel-info": "sls deploy function -f getChannelInfo -c ./src/app/lambda/serverless.yml",
+    "invoke:deploy:youtube-broadcast-api": "sls deploy function -f youtubeBroadcastInfoApi -c ./src/app/lambda/serverless.yml"
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "dayjs": "^1.8.28"
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dayjs": "^1.8.28",
+    "express": "^4.17.1",
+    "serverless-http": "^2.5.0",
+    "uuid": "^8.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
