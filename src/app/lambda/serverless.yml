@@ -9,6 +9,7 @@ provider:
     STAGE: ${self:provider.stage}
     PREFIX: ${self:custom.appName}-${self:provider.stage}
     CHANNEL_INFO_TABLE: ${self:provider.environment.PREFIX}-channel-info
+    BROADCAST_INFO_TABLE: ${self:provider.environment.PREFIX}-broadcast-info
   iamRoleStatements:
     - Effect: Allow
       Action:

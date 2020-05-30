@@ -1,6 +1,7 @@
 import dayjs, { isSameOrAfter } from 'dayjs';
 import youtubeApi from 'src/api/youtube';
 import channelInfoRepository from 'src/db/dynamodb/channel-info';
+import broadcastInfoRepository from 'src/db/dynamodb/broadcast-info';
 
 export const getYoutubeBloadcast = async () => {
   // チャンネル情報全件取得
@@ -48,6 +49,7 @@ export const getYoutubeBloadcast = async () => {
             broadcast = { ...broadcast, broadcastDate };
             console.log(broadcast);
           }
+          await broadcastInfoRepository.putItem(broadcast);
         });
       } catch (error) {
         console.log(error);
