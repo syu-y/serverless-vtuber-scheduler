@@ -46,9 +46,11 @@ export const getYoutubeBloadcast = async () => {
           const today = dayjs().format();
           if (date.isAfter(today)) {
             const broadcastDate = date.format();
+            // 登録情報に配信日を追加
             broadcast = { ...broadcast, broadcastDate };
             console.log(broadcast);
           }
+          // DBに登録
           await broadcastInfoRepository.putItem(broadcast);
         });
       } catch (error) {

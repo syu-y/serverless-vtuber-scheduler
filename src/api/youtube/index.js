@@ -2,36 +2,47 @@ import axios from 'axios';
 import youtubeConfig from 'src/api/youtube/youtube-config.json';
 import youtubeKey from 'src/api/youtube/youtube-key.json';
 // キー情報
-const apiKey = youtubeKey.apiKey;
+const apiKeyForVideos = youtubeKey.apiKeyForVideos;
+const apiKeyForBroadcasSchedule = youtubeKey.apiKeyForbBroadcasSchedule;
+const apiKeyForChannelInfo = youtubeKey.apiKeyForChannelInfo;
+
 // APIのエンドポイントとリクエストパラメータ
 // 動画検索API
 const endpointVideoSearch = youtubeConfig.searchVideos.endpoint;
 const partVideoSearch = youtubeConfig.searchVideos.part;
 const typeVideoSearch = youtubeConfig.searchVideos.type;
 // 配信情報取得API
-console.log(youtubeConfig.getBroadcastSchedulez);
 const endpointGetBroadcastSchedule =
   youtubeConfig.getBroadcastSchedule.endpoint;
-console.log(endpointGetBroadcastSchedule);
 const partGetBroadcastSchedule = youtubeConfig.getBroadcastSchedule.part;
+// チャンネル情報取得API
+const endpointGetChannelInfo = youtubeConfig.getChannelInfo.endpoint;
+const partGetChannelInfo = youtubeConfig.getChannelInfo.part;
 
 // 動画取得APIのクエリ生成
 const generateUrlVideos = ({ channelId, maxResults, order }) => {
-  const url = `${endpointVideoSearch}?part=${partVideoSearch}&key=${apiKey}&type=${typeVideoSearch}&channelId=${channelId}&count=${maxResults}&order=${order}`;
+  const url = `${endpointVideoSearch}?part=${partVideoSearch}&key=${apiKeyForVideos}&type=${typeVideoSearch}&channelId=${channelId}&count=${maxResults}&order=${order}`;
   console.log(url);
   return url;
 };
 
 // 動画取得API（配信に絞って取得する）のクエリ生成
 const generateUrlBroadcast = ({ channelId, maxResults, order, eventType }) => {
-  const url = `${endpointVideoSearch}?part=${partVideoSearch}&key=${apiKey}&type=${typeVideoSearch}&channelId=${channelId}&count=${maxResults}&order=${order}&eventType=${eventType}`;
+  const url = `${endpointVideoSearch}?part=${partVideoSearch}&key=${apiKeyForVideos}&type=${typeVideoSearch}&channelId=${channelId}&count=${maxResults}&order=${order}&eventType=${eventType}`;
   console.log(url);
   return url;
 };
 
 // 配信情報取得API（配信時刻の取得）のクエリ生成
 const generateUrlBroadcastSchedule = ({ videoId }) => {
-  const url = `${endpointGetBroadcastSchedule}?part=${partGetBroadcastSchedule}&key=${apiKey}&id=${videoId}`;
+  const url = `${endpointGetBroadcastSchedule}?part=${partGetChannelInfo}&key=${apiKeyForBroadcasSchedule}&id=${videoId}`;
+  console.log(url);
+  return url;
+};
+
+// チャンネル情報取得APIのクエリ生成
+const generateUrlChannelInfo = ({ channelId }) => {
+  const url = `${endpointGetChannelInfo}?part=${partGetBroadcastSchedule}&key=${apiKeyForChannelInfo}&id=${channelId}`;
   console.log(url);
   return url;
 };
@@ -69,11 +80,20 @@ const getBroadcasts = ({ channelId }) => {
  * @param {*} param0 videoId
  */
 const getBroadcastSchedule = (videoId) => {
-  return axios.get(
-    generateUrlBroadcastSchedule({
-      videoId,
-    }),
-  );
+  return axios.get(generateUrlBroadcastSchedule({ videoId }));
 };
 
-export default { getVideos, getBroadcasts, getBroadcastSchedule };
+/**
+ * チャンネルIDをキーにチャンネル情報を取得する
+ * @param {*} param0 channelId
+ */
+const getChannelInfo = (channelId) => {
+  return axios.get(generateUrlChannelInfo({ channelId }));
+};
+
+export default {
+  getVideos,
+  getBroadcasts,
+  getBroadcastSchedule,
+  getChannelInfo,
+};

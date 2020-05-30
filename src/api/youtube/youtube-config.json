@@ -13,5 +13,9 @@
   },
   "generateAccessToken": {
     "endpoint": "https://www.googleapis.com/oauth2/v4/token"
+  },
+  "getChannelInfo": {
+    "endpoint": "https://www.googleapis.com/youtube/v3/channels",
+    "part": "snippet"
   }
 }
