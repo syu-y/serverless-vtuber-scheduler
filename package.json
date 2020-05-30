@@ -15,11 +15,14 @@
     "dynamodb:rm:prod": "sls remove --stage prod -c ./src/app/dynamodb/serverless.yml",
     "invoke": "echo ###### Invoke Lambda Local ######",
     "invoke:get-youtube-broadcast": "LOCAL=true sls invoke local -f getYoutubeBroadcast -c ./src/app/lambda/serverless.yml",
+    "invoke:get-channel-info": "LOCAL=true sls invoke local -f getChannelInfo -c ./src/app/lambda/serverless.yml",
     "invoke:aws": "echo ###### Invoke Lambda AWS ######",
     "invoke:aws:get-youtube-broadcast": "sls invoke -f getYoutubeBroadcast -c ./src/app/lambda/serverless.yml",
+    "invoke:aws:get-channel-info": "sls invoke -f getChannelInfo -c ./src/app/lambda/serverless.yml",
     "lambda": "echo ###### Deploy Lambda ######",
     "lambda:deploy:all": "sls deploy -c ./src/app/lambda/serverless.yml",
-    "lambda:deploy:get-youtube-broadcast": "sls deploy function -f getYoutubeBroadcast -c ./src/app/lambda/serverless.yml"
+    "lambda:deploy:get-youtube-broadcast": "sls deploy function -f getYoutubeBroadcast -c ./src/app/lambda/serverless.yml",
+    "invoke:deploy:get-channel-info": "sls deploy function -f getChannelInfo -c ./src/app/lambda/serverless.yml"
   },
   "dependencies": {
     "axios": "^0.19.2",
