@@ -1,0 +1,43 @@
+service: ${self:custom.appName}-dynamodb
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, self:custom.defaultStage}
+  region: ap-northeast-1
+  profile: private
+  environment:
+    STAGE: ${self:provider.stage}
+    PREFIX: ${self:custom.appName}-${self:provider.stage}
+    CHANNEL_INFO_TABLE: ${self:provider.environment.PREFIX}-channel-info
+custom:
+  defaultStage: dev
+  appName: vtuber-scheduler
+  dynamodb:
+    stages: dev
+    start:
+      port: 8082
+      inMemory: true
+      migrate: true
+      seed: true
+    seed:
+      ChannelInfo:
+        sources:
+          - table: ${self:provider.environment.CHANNEL_INFO_TABLE}
+            sources: [./src/app/dynamodb/seeds/channel-info.json]
+plugins:
+  - serverless-dynamodb-local
+resources:
+  Resources:
+    ChannelInfo:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.CHANNEL_INFO_TABLE}
+        AttributeDefinitions:
+          - AttributeName: channelId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: channelId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
