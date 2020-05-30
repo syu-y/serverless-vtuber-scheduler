@@ -28,3 +28,5 @@ plugins:
 functions:
   getYoutubeBroadcast:
     handler: src/app/lambda/get-youtube-broadcast/handler.getYoutubeBloadcast
+  getChannelInfo:
+    handler: src/app/lambda/get-channel-info/handler.getChannelInfo
