@@ -9,6 +9,7 @@ provider:
     STAGE: ${self:provider.stage}
     PREFIX: ${self:custom.appName}-${self:provider.stage}
     CHANNEL_INFO_TABLE: ${self:provider.environment.PREFIX}-channel-info
+    BROADCAST_INFO_TABLE: ${self:provider.environment.PREFIX}-broadcast-info
 custom:
   defaultStage: dev
   appName: vtuber-scheduler
@@ -24,6 +25,10 @@ custom:
         sources:
           - table: ${self:provider.environment.CHANNEL_INFO_TABLE}
             sources: [./src/app/dynamodb/seeds/channel-info.json]
+      BroadcastInfo:
+        sources:
+          - table: ${self:provider.environment.BROADCAST_INFO_TABLE}
+            sources: [./src/app/dynamodb/seeds/broadcast-info.json]
 plugins:
   - serverless-dynamodb-local
 resources:
@@ -37,6 +42,19 @@ resources:
             AttributeType: S
         KeySchema:
           - AttributeName: channelId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    BroadcastInfo:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.BROADCAST_INFO_TABLE}
+        AttributeDefinitions:
+          - AttributeName: videoId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: videoId
             KeyType: HASH
         ProvisionedThroughput:
           ReadCapacityUnits: 1
