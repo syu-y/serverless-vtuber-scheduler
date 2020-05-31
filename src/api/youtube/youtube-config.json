@@ -2,7 +2,7 @@
   "searchVideos": {
     "endpoint": "https://www.googleapis.com/youtube/v3/search",
     "part": "snippet",
-    "maxResults": 50,
+    "maxResults": 10,
     "order": "date",
     "type": "video",
     "eventType": "upcoming"
