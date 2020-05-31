@@ -6,5 +6,8 @@ jspm_packages
 .serverless
 .dynamodb
 
+# webpack
+.webpack
+
 # Key Info
 youtube-key.json
