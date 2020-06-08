@@ -19,7 +19,7 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: 'arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.PREFIX}*'
+      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.PREFIX}*"
 custom:
   defaultStage: dev
   appName: vtuber-scheduler
@@ -28,6 +28,10 @@ plugins:
 functions:
   getYoutubeBroadcast:
     handler: src/app/lambda/get-youtube-broadcast/handler.getYoutubeBloadcast
+    events:
+      # 日本時間(JST)で毎日8時、20時に定期実行
+      - schedule: cron(0 23 * * ? *)
+      - schedule: cron(0 11 * * ? *)
   getChannelInfo:
     handler: src/app/lambda/get-channel-info/handler.getChannelInfo
   youtubeBroadcastInfoApi:
