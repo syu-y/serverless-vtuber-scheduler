@@ -25,7 +25,10 @@
     "lambda:deploy:all": "sls deploy -c ./src/app/lambda/serverless.yml",
     "lambda:deploy:get-youtube-broadcast": "sls deploy function -f getYoutubeBroadcast -c ./src/app/lambda/serverless.yml",
     "invoke:deploy:get-channel-info": "sls deploy function -f getChannelInfo -c ./src/app/lambda/serverless.yml",
-    "invoke:deploy:youtube-broadcast-api": "sls deploy function -f youtubeBroadcastInfoApi -c ./src/app/lambda/serverless.yml"
+    "invoke:deploy:youtube-broadcast-api": "sls deploy function -f youtubeBroadcastInfoApi -c ./src/app/lambda/serverless.yml",
+    "lambda:deploy:prod": "sls deploy --stage prod -c ./src/app/lambda/serverless.yml",
+    "lambda:rm": "sls remove -c ./src/app/lambda/serverless.yml",
+    "lambda:rm:prod": "sls remove --stage prod -c ./src/app/lambda/serverless.yml"
   },
   "dependencies": {
     "axios": "^0.19.2",
