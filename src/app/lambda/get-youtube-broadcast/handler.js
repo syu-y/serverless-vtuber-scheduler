@@ -52,9 +52,9 @@ export const getYoutubeBloadcast = async () => {
               // 登録情報に配信日を追加
               broadcast = { ...broadcast, broadcastDate };
               console.log(broadcast);
+              // DBに登録
+              broadcastInfoRepository.putItem(broadcast);
             }
-            // DBに登録
-            broadcastInfoRepository.putItem(broadcast);
           }),
         );
       } catch (error) {
