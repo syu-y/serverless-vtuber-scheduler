@@ -5,7 +5,12 @@ export const youtubeBroadcastInfoApi = async (event, context, callback) => {
     const broadcasts = await broadcastInfoRepository.getAllItems();
     const response = {
       statusCode: 200,
-      headers: {},
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE',
+        'Access-Control-Allow-Headers':
+          'Content-Type, Authorization, access_token',
+      },
       body: JSON.stringify({ broadcasts: broadcasts }),
     };
     callback(null, response);
