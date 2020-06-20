@@ -42,3 +42,11 @@ functions:
           path: youtubeBroadcastInfo
           method: get
           cors: true
+  youtubeChannelInfoApi:
+    handler: src/app/lambda/youtube-channel-api/handler.youtubeChannelInfoApi
+    # API Gatewayに関する設定
+    events:
+      - http:
+          path: youtubeChannelInfo
+          method: get
+          cors: true
