@@ -53,7 +53,7 @@ export const getYoutubeBloadcast = async () => {
               broadcast = { ...broadcast, broadcastDate };
               console.log(broadcast);
               // DBに登録
-              broadcastInfoRepository.putItem(broadcast);
+              await broadcastInfoRepository.putItem(broadcast);
             }
           }),
         );

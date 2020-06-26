@@ -25,13 +25,19 @@ custom:
   appName: vtuber-scheduler
 plugins:
   - serverless-webpack
+package:
+  individually: true
+  exclude:
+    - ./**
 functions:
   getYoutubeBroadcast:
     handler: src/app/lambda/get-youtube-broadcast/handler.getYoutubeBloadcast
     events:
-      # 日本時間(JST)で毎日8時、20時に定期実行
-      - schedule: cron(0 23 * * ? *)
-      - schedule: cron(0 11 * * ? *)
+      # 日本時間(JST)で毎日0時、6時、12時間、18時に定期実行
+      - schedule: cron(0 15 * * ? *) #0時
+      - schedule: cron(0 21 * * ? *) #6時
+      - schedule: cron(0 3 * * ? *) #12時
+      - schedule: cron(0 9 * * ? *) #18時
   getChannelInfo:
     handler: src/app/lambda/get-channel-info/handler.getChannelInfo
   youtubeBroadcastInfoApi:

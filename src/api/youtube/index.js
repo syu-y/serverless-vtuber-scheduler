@@ -1,8 +1,44 @@
 import axios from 'axios';
 import youtubeConfig from 'src/api/youtube/youtube-config.json';
 import youtubeKey from 'src/api/youtube/youtube-key.json';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ja';
+
+dayjs.locale('ja');
+
+const setDate = (now, hour, min, sec) => {
+  return dayjs()
+    .year(now.year())
+    .month(now.month())
+    .date(now.date())
+    .hour(hour)
+    .minute(min)
+    .second(sec);
+};
+
+const now = dayjs();
+const am0 = setDate(now, 0, 0, 0);
+const am6 = setDate(now, 6, 0, 0);
+const pm12 = setDate(now, 12, 0, 0);
+const pm18 = setDate(now, 18, 0, 0);
+
+console.log('now : ', now.format());
+const isAfterAm0 = dayjs(now).isAfter(am0);
+const isAfterAm6 = dayjs(now).isAfter(am6);
+const isAfterPm12 = dayjs(now).isAfter(pm12);
+const isAfterPm18 = dayjs(now).isAfter(pm18);
+
 // キー情報
-const apiKeyForVideos = youtubeKey.apiKeyForVideos;
+const apiKeyForVideos = isAfterPm18
+  ? youtubeKey.apiKeyForVideosPm18
+  : isAfterPm12
+  ? youtubeKey.apiKeyForVideosPm12
+  : isAfterAm6
+  ? youtubeKey.apiKeyForVideosAm6
+  : youtubeKey.apiKeyForVideosAm0;
+
+console.log(apiKeyForVideos);
+
 const apiKeyForBroadcastSchedule = youtubeKey.apiKeyForBroadcastSchedule;
 const apiKeyForChannelInfo = youtubeKey.apiKeyForChannelInfo;
 
